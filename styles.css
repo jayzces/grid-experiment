@@ -1,3 +1,9 @@
+:root {
+    --delay: 300ms;
+    --timing: ease;
+    --bg: rgba(255, 211, 0, 0.6);
+}
+
 body {
     display: flex;
     align-items: center;
@@ -34,7 +40,7 @@ body {
     cursor: pointer;
 }
 
-.item.featured {
+.featured {
     grid-area: 1 / span 2 / 3 / auto;
 }
 
@@ -48,7 +54,7 @@ body {
     object-fit: cover;
     object-position: center;
     transform: scale(1);
-    transition: transform 300ms ease;
+    transition: transform var(--delay) var(--timing);
 }
 
 .item:hover img {
@@ -57,12 +63,11 @@ body {
 
 
 .overlay {
-    background-color: rgba(255, 211, 0, 0.7); /* #FFD300 */
+    background: linear-gradient(transparent 50%, var(--bg));
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     top: 0;
     left: 0;
     right: 0;
@@ -71,29 +76,96 @@ body {
     text-align: center;
     font-size: 14px;
     color: rgba(40, 40, 40, 0.7);
+}
+
+.overlay::before {
+    content: "";
+    background-color: var(--bg);
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
     opacity: 0;
-    transition: opacity 300ms ease;
+    transition: opacity var(--delay) var(--timing);
 }
 
 .item:hover .overlay {
+    pointer-events: auto;
+}
+
+.item:hover .overlay::before {
     opacity: 1;
 }
 
-.item.featured .overlay {
+.featured .overlay {
+    background: linear-gradient(transparent 75%, var(--bg));
     padding: 30px;
     font-size: 16px;
 }
 
 
-.overlay > div {
+.title {
+    position: relative;
+    width: 100%;
+    opacity: 0;
+    transition: opacity var(--delay) var(--timing);
+    z-index: 1;
+}
+
+.item:hover .title {
+    opacity: 1;
+}
+
+
+.challenge-title {
     text-transform: uppercase;
     font-weight: bold;
     color: #282828;
 }
 
-.item.featured .overlay > div {
+.featured .challenge-title {
     margin-bottom: 5px;
     font-size: 24px;
+}
+
+
+.name {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden
+}
+
+
+.prize {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    width: 0;
+    white-space: nowrap;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    transition: all var(--delay) var(--timing);
+    z-index: 1;
+}
+
+.item:hover .prize {
+    color: #282828;
+    width: calc(100% - 20px);
+}
+
+.featured .prize {
+    left: 20px;
+    bottom: 20px;
+    font-size: 24px;
+}
+
+.featured:hover .prize {
+    width: calc(100% - 40px);
 }
 
 
@@ -104,7 +176,8 @@ body {
         padding: 15px;
     }
 
-    .item.featured {
+
+    .featured {
         grid-row: auto / span 1;
     }
 }
@@ -112,23 +185,36 @@ body {
 
 @media all and (max-width: 360px) {
 
-    .item.featured {
+    .featured {
         grid-column: auto / span 2;
     }
 
 
-    .item.featured .overlay {
+    .featured .overlay {
         padding: 10px;
         font-size: 14px;
     }
 
 
-    .item.featured .overlay > div {
+    .featured .challenge-title {
         margin-bottom: 0;
-        font-size: 18px;
+        font-size: inherit;
+    }
+
+
+    .featured .prize {
+        font-size: 16px;
+        left: 10px;
+        bottom: 10px;
+    }
+
+    .featured:hover .prize {
+        width: calc(100% - 20px);
     }
 } */
 /******************************************************************************/
+
+
 
 /* For a mobile carousel */
 @media all and (max-width: 600px) {
@@ -158,14 +244,25 @@ body {
     }
 
 
-    .item.featured .overlay {
+    .featured .overlay {
         padding: 10px;
         font-size: 14px;
     }
 
 
-    .item.featured .overlay > div {
+    .featured .challenge-title {
         margin-bottom: 0;
         font-size: inherit;
+    }
+
+
+    .featured .prize {
+        font-size: 16px;
+        left: 10px;
+        bottom: 10px;
+    }
+
+    .featured:hover .prize {
+        width: calc(100% - 20px);
     }
 }
