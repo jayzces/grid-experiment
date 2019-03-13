@@ -4,7 +4,7 @@ Grid Experiment for Channelfix List of Challenges. It transforms to a carousel o
 
 **Desktop Screenshot**
 
-![desktop](desktop.png)
+![desktop](preview.png)
 
 **Mobile Preview**
 
